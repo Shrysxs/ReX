@@ -106,7 +106,7 @@ export default function ResultsPanel({
           </div>
         ) : !testString ? (
           <div className="flex items-center justify-center h-full">
-            <p className="text-gray-500 italic">$ echo "test string" | grep pattern</p>
+            <p className="text-gray-500 italic">$ echo &quot;test string&quot; | grep pattern</p>
           </div>
         ) : highlighted.length > 0 ? (
           highlighted
