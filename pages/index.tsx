@@ -69,12 +69,22 @@ export default function Home() {
       {/* Terminal Header */}
       <div className="bg-black border-b border-gray-800 px-6 py-3">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <span className="text-white text-lg">ReX</span>
-            <span className="text-gray-500">–</span>
-            <span className="text-gray-400">Regex Playground</span>
+          <div className="flex items-center space-x-3">
+            {/* Original ReX Logo */}
+            <div className="flex items-center space-x-2">
+              <div className="font-mono text-lg flex items-center">
+                <span className="text-white">R</span>
+                <span className="text-green-400">e</span>
+                <span className="text-white">X</span>
+                <span className="text-green-400 ml-1 animate-pulse">_</span>
+              </div>
+              <span className="text-gray-500">–</span>
+              <span className="text-gray-400">Regex Playground</span>
+            </div>
           </div>
-          <div className="flex items-center space-x-1">
+          
+          <div className="flex items-center space-x-4">
+            {/* Active Flags */}
             {activeFlagsDisplay && (
               <div className="flex space-x-1">
                 {Object.entries(flags).map(([flag, enabled]) => (
@@ -91,6 +101,27 @@ export default function Home() {
                 ))}
               </div>
             )}
+            
+            {/* Social Links */}
+            <div className="flex items-center space-x-3 text-sm">
+              <a
+                href="https://x.com/Shysxs"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition-colors font-mono"
+              >
+                @Shysxs
+              </a>
+              <span className="text-gray-600">|</span>
+              <a
+                href="https://github.com/Shrysxs"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-green-400 transition-colors font-mono"
+              >
+                github
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -147,6 +178,39 @@ export default function Home() {
               flags={flagString}
               testString={testString}
             />
+          </div>
+        </div>
+        
+        {/* Footer */}
+        <div className="mt-12 pt-6 border-t border-gray-800">
+          <div className="flex items-center justify-center space-x-6 text-sm font-mono">
+            <span className="text-gray-500">Built by</span>
+            <a
+              href="https://x.com/Shysxs"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-white transition-colors flex items-center space-x-1"
+            >
+              <span>@Shysxs</span>
+            </a>
+            <span className="text-gray-600">•</span>
+            <a
+              href="https://github.com/Shrysxs"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-green-400 transition-colors flex items-center space-x-1"
+            >
+              <span>GitHub</span>
+            </a>
+            <span className="text-gray-600">•</span>
+            <a
+              href="https://github.com/Shrysxs/ReX"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-green-400 transition-colors"
+            >
+              Source
+            </a>
           </div>
         </div>
       </div>
