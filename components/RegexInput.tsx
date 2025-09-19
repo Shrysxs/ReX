@@ -6,7 +6,7 @@ interface RegexInputProps {
   setPattern: (pattern: string) => void;
   flags: { g: boolean; i: boolean; m: boolean };
   setFlags: (flags: { g: boolean; i: boolean; m: boolean }) => void;
-  error?: string;
+  error?: string | null;
 }
 
 export default function RegexInput({ pattern, setPattern, flags, setFlags, error }: RegexInputProps) {
