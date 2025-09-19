@@ -151,7 +151,7 @@ export default function ResultsPanel({
                               key={groupIndex}
                               className="inline-flex items-center px-1.5 py-0.5 text-xs font-mono bg-gray-100 text-gray-700 rounded"
                             >
-                              {groupIndex + 1}: "{group}"
+                              {groupIndex + 1}: &quot;{group}&quot;
                             </span>
                           ))}
                         </div>

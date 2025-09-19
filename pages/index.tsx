@@ -2,12 +2,6 @@ import { useState, useMemo } from 'react';
 import RegexInput from '../components/RegexInput';
 import ResultsPanel from '../components/ResultsPanel';
 
-interface Match {
-  text: string;
-  index: number;
-  groups: string[];
-}
-
 export default function Home() {
   const [pattern, setPattern] = useState('');
   const [testString, setTestString] = useState('');
