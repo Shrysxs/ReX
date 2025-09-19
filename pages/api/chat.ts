@@ -59,8 +59,9 @@ export default async function handler(
     const aiResponse = data.choices[0]?.message?.content || 'No response available';
 
     return res.status(200).json({ content: aiResponse });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Chat API error:', error);
-    return res.status(500).json({ content: '', error: error.message || 'Unknown server error' });
+    const errorMessage = error instanceof Error ? error.message : 'Unknown server error';
+    return res.status(500).json({ content: '', error: errorMessage });
   }
 }

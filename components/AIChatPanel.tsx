@@ -78,7 +78,7 @@ export default function AIChatPanel({ regex, flags, testString }: AIChatPanelPro
         { role: 'user', content: initialPrompt },
         { role: 'assistant', content: aiResponse }
       ]);
-    } catch (err) {
+    } catch {
       setError('AI service unavailable, try again later');
     } finally {
       setIsLoading(false);
@@ -125,7 +125,7 @@ export default function AIChatPanel({ regex, flags, testString }: AIChatPanelPro
       const aiResponse = data.content || 'No response available';
 
       setMessages([...newMessages, { role: 'assistant', content: aiResponse }]);
-    } catch (err) {
+    } catch {
       setError('AI service unavailable, try again later');
     } finally {
       setIsLoading(false);
