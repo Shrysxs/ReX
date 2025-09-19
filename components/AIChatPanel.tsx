@@ -31,7 +31,11 @@ export default function AIChatPanel({ regex, flags, testString }: AIChatPanelPro
   }, [messages]);
 
   const handleExplainClick = async () => {
-    if (!regex) return;
+    // Validate inputs before making API call
+    if (!regex || !regex.trim()) {
+      setError('Please enter a regex pattern first');
+      return;
+    }
     
     setIsOpen(true);
     setIsLoading(true);

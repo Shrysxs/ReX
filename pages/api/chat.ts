@@ -30,7 +30,7 @@ export default async function handler(
 
   const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) {
-    return res.status(500).json({ content: '', error: 'API key not configured' });
+    return res.status(500).json({ content: '', error: 'Server misconfigured: missing GROQ_API_KEY' });
   }
 
   try {
@@ -52,15 +52,15 @@ export default async function handler(
     if (!response.ok) {
       const errorText = await response.text();
       console.error('Groq API error:', response.status, errorText);
-      return res.status(500).json({ content: '', error: 'AI service unavailable' });
+      return res.status(response.status).json({ content: '', error: `Groq API Error: ${errorText}` });
     }
 
     const data = await response.json();
     const aiResponse = data.choices[0]?.message?.content || 'No response available';
 
     return res.status(200).json({ content: aiResponse });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Chat API error:', error);
-    return res.status(500).json({ content: '', error: 'AI service unavailable' });
+    return res.status(500).json({ content: '', error: error.message || 'Unknown server error' });
   }
 }
