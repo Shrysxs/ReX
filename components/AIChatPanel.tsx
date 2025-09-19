@@ -40,14 +40,12 @@ export default function AIChatPanel({ regex, flags, testString }: AIChatPanelPro
     const initialPrompt = `Explain this regex in detail: /${regex}/${flags} applied on test string: '${testString}'`;
     
     try {
-      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_GROQ_API_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'llama-3-70b-instruct',
           messages: [
             {
               role: 'system',
@@ -57,10 +55,7 @@ export default function AIChatPanel({ regex, flags, testString }: AIChatPanelPro
               role: 'user',
               content: initialPrompt
             }
-          ],
-          stream: false,
-          temperature: 0.3,
-          max_tokens: 1000
+          ]
         })
       });
 
@@ -69,7 +64,11 @@ export default function AIChatPanel({ regex, flags, testString }: AIChatPanelPro
       }
 
       const data = await response.json();
-      const aiResponse = data.choices[0]?.message?.content || 'No explanation available';
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      const aiResponse = data.content || 'No explanation available';
 
       setMessages([
         { role: 'user', content: initialPrompt },
@@ -94,24 +93,19 @@ export default function AIChatPanel({ regex, flags, testString }: AIChatPanelPro
     setMessages(newMessages);
 
     try {
-      const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_GROQ_API_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'llama-3-70b-instruct',
           messages: [
             {
               role: 'system',
               content: 'You are a regex tutor. Always explain regex in clean, professional, plain English. Support markdown formatting for readability. Never be vague. Focus on regex patterns, flags, and matching behavior. Keep responses concise and educational.'
             },
             ...newMessages
-          ],
-          stream: false,
-          temperature: 0.3,
-          max_tokens: 800
+          ]
         })
       });
 
@@ -120,7 +114,11 @@ export default function AIChatPanel({ regex, flags, testString }: AIChatPanelPro
       }
 
       const data = await response.json();
-      const aiResponse = data.choices[0]?.message?.content || 'No response available';
+      if (data.error) {
+        throw new Error(data.error);
+      }
+
+      const aiResponse = data.content || 'No response available';
 
       setMessages([...newMessages, { role: 'assistant', content: aiResponse }]);
     } catch (err) {
