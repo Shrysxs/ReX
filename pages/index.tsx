@@ -109,7 +109,7 @@ export default function Home() {
           {/* Test String Input */}
           <div className="mt-6">
             <div className="flex items-center mb-2">
-              <span className="text-green-400 mr-2">></span>
+              <span className="text-green-400 mr-2">&gt;</span>
               <span className="text-cyan-400">testString:</span>
             </div>
             <textarea
@@ -139,7 +139,7 @@ export default function Home() {
           {/* AI Chat Panel */}
           <div className="bg-gray-900 rounded-md shadow-sm border border-gray-700 p-6">
             <div className="flex items-center mb-4">
-              <span className="text-green-400 mr-2">></span>
+              <span className="text-green-400 mr-2">&gt;</span>
               <span className="text-cyan-400">AI Assistant</span>
             </div>
             <AIChatPanel

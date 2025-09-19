@@ -216,7 +216,7 @@ export default function AIChatPanel({ regex, flags, testString }: AIChatPanelPro
           {/* Chat Input */}
           {messages.length > 0 && (
             <div className="flex items-center gap-2">
-              <span className="text-green-400 font-mono">></span>
+              <span className="text-green-400 font-mono">&gt;</span>
               <textarea
                 ref={textareaRef}
                 value={input}

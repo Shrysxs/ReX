@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import ErrorBanner from './ErrorBanner';
 
 interface RegexInputProps {
   pattern: string;
@@ -48,7 +47,7 @@ export default function RegexInput({ pattern, setPattern, flags, setFlags, error
       {/* Regex Pattern Input */}
       <div>
         <div className="flex items-center mb-2">
-          <span className="text-green-400 mr-2">></span>
+          <span className="text-green-400 mr-2">&gt;</span>
           <span className="text-cyan-400">pattern</span>
           <span className="text-gray-400 mx-2">/</span>
           <span className="text-yellow-300">flags</span>
@@ -97,7 +96,7 @@ export default function RegexInput({ pattern, setPattern, flags, setFlags, error
       {/* Regex Flags */}
       <div>
         <div className="flex items-center mb-3">
-          <span className="text-green-400 mr-2">></span>
+          <span className="text-green-400 mr-2">&gt;</span>
           <span className="text-cyan-400">flags</span>
         </div>
         <div className="flex gap-4">

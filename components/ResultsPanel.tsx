@@ -79,7 +79,7 @@ export default function ResultsPanel({
     <div className="p-6">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center">
-          <span className="text-green-400 mr-2">></span>
+          <span className="text-green-400 mr-2">&gt;</span>
           <span className="text-cyan-400">matches</span>
         </div>
         {!regexError && matches.length > 0 && (
