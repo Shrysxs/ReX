@@ -48,8 +48,8 @@ export default function ResultsPanel({
           data-match-index={i}
           className={`font-bold cursor-pointer transition-colors ${
             isSelected 
-              ? 'text-black bg-yellow-300 px-1 rounded' 
-              : 'text-yellow-300 hover:text-yellow-200'
+              ? 'text-black bg-green-400' 
+              : 'text-green-400 hover:text-green-300'
           }`}
           onClick={() => onMatchSelect(i)}
         >
@@ -80,10 +80,10 @@ export default function ResultsPanel({
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center">
           <span className="text-green-400 mr-2">&gt;</span>
-          <span className="text-cyan-400">matches</span>
+          <span className="text-white">matches</span>
         </div>
         {!regexError && matches.length > 0 && (
-          <span className="px-2 py-1 text-xs bg-green-600 text-white rounded">
+          <span className="px-2 py-1 text-xs text-green-400">
             {matches.length}
           </span>
         )}
@@ -91,28 +91,28 @@ export default function ResultsPanel({
       
       {/* Large input warning */}
       {isLargeInput && (
-        <div className="mb-4 p-3 bg-yellow-900 border border-yellow-600 rounded-md">
-          <p className="text-sm text-yellow-300">
+        <div className="mb-4 p-3 border border-gray-800">
+          <p className="text-sm text-yellow-500">
             ⚠️ Large input — highlighting may be slow
           </p>
         </div>
       )}
 
       {/* Highlighted Text Preview */}
-      <div className="bg-black border border-gray-600 rounded-md p-4 min-h-[120px] font-mono whitespace-pre-wrap text-sm max-h-[300px] overflow-y-auto">
+      <div className="bg-black border border-gray-800 p-4 min-h-[120px] font-mono whitespace-pre-wrap text-sm max-h-[300px] overflow-y-auto">
         {regexError ? (
           <div className="flex items-center justify-center h-full">
             <p className="text-red-400 italic">✗ Invalid regex pattern</p>
           </div>
         ) : !testString ? (
           <div className="flex items-center justify-center h-full">
-            <p className="text-gray-500 italic">$ echo &quot;test string&quot; | grep pattern</p>
+            <p className="text-gray-600 italic">$ echo &quot;test string&quot; | grep pattern</p>
           </div>
         ) : highlighted.length > 0 ? (
           highlighted
         ) : (
           <div className="flex items-center justify-center h-full">
-            <p className="text-gray-500 italic">$ no matches found</p>
+            <p className="text-gray-600 italic">$ no matches found</p>
           </div>
         )}
       </div>
@@ -120,34 +120,34 @@ export default function ResultsPanel({
       {/* Terminal-style Match List */}
       {!regexError && matches.length > 0 && (
         <div className="mt-4">
-          <div className="text-cyan-400 text-sm mb-2">Matches ({matches.length}):</div>
-          <div className="space-y-1 max-h-60 overflow-y-auto bg-black border border-gray-600 rounded-md p-3">
+          <div className="text-white text-sm mb-2">Matches ({matches.length}):</div>
+          <div className="space-y-1 max-h-60 overflow-y-auto bg-black border border-gray-800 p-3">
             {matches.map((match, index) => (
               <button
                 key={index}
                 onClick={() => onMatchSelect(index)}
                 className={`w-full text-left font-mono text-sm transition-colors focus:outline-none ${
                   selectedMatchIndex === index
-                    ? 'text-yellow-300 bg-gray-800'
-                    : 'text-gray-300 hover:text-white hover:bg-gray-800'
-                } p-2 rounded`}
+                    ? 'text-green-400 bg-gray-900'
+                    : 'text-gray-300 hover:text-white hover:bg-gray-900'
+                } p-2`}
               >
                 <div className="flex items-start gap-2">
                   <span className="text-green-400 min-w-0">
                     {index}:
                   </span>
                   <div className="flex-1 min-w-0">
-                    <span className="text-yellow-300">
+                    <span className="text-white">
                       &quot;{match.text}&quot;
                     </span>
-                    <span className="text-gray-400 ml-2">
+                    <span className="text-gray-500 ml-2">
                       at index {match.index}
                     </span>
                     {match.groups.length > 0 && (
                       <div className="mt-1 text-xs">
-                        <span className="text-cyan-400">groups: </span>
+                        <span className="text-white">groups: </span>
                         {match.groups.map((group, groupIndex) => (
-                          <span key={groupIndex} className="text-gray-400 mr-2">
+                          <span key={groupIndex} className="text-gray-500 mr-2">
                             [{groupIndex + 1}] &quot;{group}&quot;
                           </span>
                         ))}
@@ -163,8 +163,8 @@ export default function ResultsPanel({
 
       {/* Invalid pattern message */}
       {regexError && (
-        <div className="mt-4 p-3 bg-red-900 border border-red-600 rounded-md">
-          <p className="text-red-300 text-sm">
+        <div className="mt-4 p-3 border border-gray-800">
+          <p className="text-red-400 text-sm">
             ✗ {regexError}
           </p>
         </div>

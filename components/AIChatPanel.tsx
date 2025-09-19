@@ -142,8 +142,8 @@ export default function AIChatPanel({ regex, flags, testString }: AIChatPanelPro
   const renderMarkdown = (content: string) => {
     // Simple markdown rendering for code blocks and bold text with terminal colors
     return content
-      .replace(/`([^`]+)`/g, '<code class="bg-gray-800 text-yellow-300 px-1 rounded font-mono text-sm">$1</code>')
-      .replace(/\*\*([^*]+)\*\*/g, '<strong class="text-cyan-400">$1</strong>')
+      .replace(/`([^`]+)`/g, '<code class="bg-gray-900 text-green-400 px-1 font-mono text-sm">$1</code>')
+      .replace(/\*\*([^*]+)\*\*/g, '<strong class="text-white">$1</strong>')
       .replace(/\n/g, '<br>');
   };
 
@@ -153,7 +153,7 @@ export default function AIChatPanel({ regex, flags, testString }: AIChatPanelPro
       <button
         onClick={handleExplainClick}
         disabled={!regex || isLoading}
-        className="inline-flex items-center px-4 py-2 bg-green-600 text-black font-mono text-sm rounded hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className="inline-flex items-center px-4 py-2 bg-green-400 text-black font-mono text-sm hover:bg-green-300 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
         {isLoading ? (
           <>
@@ -167,7 +167,7 @@ export default function AIChatPanel({ regex, flags, testString }: AIChatPanelPro
 
       {/* Error Banner */}
       {error && (
-        <div className="mt-3 bg-red-900 border border-red-600 text-red-300 px-3 py-2 rounded-md flex items-center gap-2">
+        <div className="mt-3 border border-gray-800 text-red-400 px-3 py-2 flex items-center gap-2">
           <span className="text-sm">✗</span>
           <span className="text-sm font-mono">{error}</span>
         </div>
@@ -177,11 +177,11 @@ export default function AIChatPanel({ regex, flags, testString }: AIChatPanelPro
       {isOpen && (
         <div className="mt-4 transition-all">
           {/* Chat Messages */}
-          <div className="max-h-[300px] overflow-y-auto space-y-2 mb-4 bg-black border border-gray-600 rounded-md p-3">
+          <div className="max-h-[300px] overflow-y-auto space-y-2 mb-4 bg-black border border-gray-800 p-3">
             {messages.map((message, index) => (
               <div key={index} className="font-mono text-sm">
                 <div className="flex items-start gap-2">
-                  <span className={message.role === 'user' ? 'text-cyan-400' : 'text-green-400'}>
+                  <span className={message.role === 'user' ? 'text-white' : 'text-green-400'}>
                     {message.role === 'user' ? 'You:' : 'AI:'}
                   </span>
                   <div className="flex-1 text-gray-300">
@@ -202,10 +202,10 @@ export default function AIChatPanel({ regex, flags, testString }: AIChatPanelPro
               <div className="font-mono text-sm">
                 <div className="flex items-start gap-2">
                   <span className="text-green-400">AI:</span>
-                  <div className="flex items-center gap-1 text-gray-400">
-                    <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce"></div>
-                    <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                    <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                  <div className="flex items-center gap-1 text-gray-500">
+                    <div className="w-1 h-1 bg-gray-500 rounded-full animate-bounce"></div>
+                    <div className="w-1 h-1 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                    <div className="w-1 h-1 bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                   </div>
                 </div>
               </div>
@@ -223,14 +223,14 @@ export default function AIChatPanel({ regex, flags, testString }: AIChatPanelPro
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="ask follow-up question..."
-                className="flex-1 bg-transparent text-white font-mono text-sm border-b border-gray-600 focus:outline-none focus:border-cyan-400 resize-none placeholder-gray-500 py-1"
+                className="flex-1 bg-black text-white font-mono text-sm border-b border-gray-800 focus:outline-none focus:border-green-400 resize-none placeholder-gray-600 py-1"
                 rows={1}
                 disabled={isLoading}
               />
               <button
                 onClick={handleSendMessage}
                 disabled={!input.trim() || isLoading}
-                className="px-3 py-1 bg-cyan-600 text-black font-mono text-xs rounded hover:bg-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="px-3 py-1 bg-green-400 text-black font-mono text-xs hover:bg-green-300 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
                 send
               </button>

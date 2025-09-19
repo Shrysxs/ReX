@@ -67,23 +67,23 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-black text-white font-mono">
       {/* Terminal Header */}
-      <div className="bg-gray-900 shadow-sm border-b border-gray-700 px-6 py-4">
+      <div className="bg-black border-b border-gray-800 px-6 py-3">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <span className="text-green-400 text-xl font-bold">ReX</span>
-            <span className="text-gray-400">–</span>
-            <span className="text-gray-300">Regex Playground</span>
+            <span className="text-white text-lg">ReX</span>
+            <span className="text-gray-500">–</span>
+            <span className="text-gray-400">Regex Playground</span>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-1">
             {activeFlagsDisplay && (
               <div className="flex space-x-1">
                 {Object.entries(flags).map(([flag, enabled]) => (
                   <span
                     key={flag}
-                    className={`px-2 py-1 text-xs rounded ${
+                    className={`px-2 py-1 text-xs ${
                       enabled 
-                        ? 'bg-cyan-600 text-white' 
-                        : 'bg-gray-700 text-gray-400'
+                        ? 'text-green-400' 
+                        : 'text-gray-600'
                     }`}
                   >
                     [{flag}]
@@ -97,7 +97,7 @@ export default function Home() {
 
       <div className="max-w-6xl mx-auto p-6 space-y-6">
         {/* Terminal Input Section */}
-        <div className="bg-gray-900 rounded-md shadow-sm p-6 border border-gray-700">
+        <div className="bg-black p-6">
           <RegexInput
             pattern={pattern}
             setPattern={setPattern}
@@ -110,7 +110,7 @@ export default function Home() {
           <div className="mt-6">
             <div className="flex items-center mb-2">
               <span className="text-green-400 mr-2">&gt;</span>
-              <span className="text-cyan-400">testString:</span>
+              <span className="text-white">testString:</span>
             </div>
             <textarea
               id="testString"
@@ -118,7 +118,7 @@ export default function Home() {
               onChange={(e) => setTestString(e.target.value)}
               placeholder="Enter your test string here..."
               rows={6}
-              className="w-full bg-transparent text-white font-mono border border-gray-600 rounded-md px-4 py-3 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 resize-vertical placeholder-gray-500"
+              className="w-full bg-black text-white font-mono border border-gray-800 px-4 py-3 focus:outline-none focus:border-green-400 resize-vertical placeholder-gray-600"
             />
           </div>
         </div>
@@ -126,7 +126,7 @@ export default function Home() {
         {/* Results and AI Chat Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Results Panel */}
-          <div className="bg-gray-800 rounded-md shadow-sm border border-gray-700">
+          <div className="bg-black border border-gray-800">
             <ResultsPanel
               matches={matches}
               regexError={regexError}
@@ -137,10 +137,10 @@ export default function Home() {
           </div>
 
           {/* AI Chat Panel */}
-          <div className="bg-gray-900 rounded-md shadow-sm border border-gray-700 p-6">
+          <div className="bg-black border border-gray-800 p-6">
             <div className="flex items-center mb-4">
               <span className="text-green-400 mr-2">&gt;</span>
-              <span className="text-cyan-400">AI Assistant</span>
+              <span className="text-white">AI Assistant</span>
             </div>
             <AIChatPanel
               regex={pattern}

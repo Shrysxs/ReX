@@ -48,9 +48,9 @@ export default function RegexInput({ pattern, setPattern, flags, setFlags, error
       <div>
         <div className="flex items-center mb-2">
           <span className="text-green-400 mr-2">&gt;</span>
-          <span className="text-cyan-400">pattern</span>
-          <span className="text-gray-400 mx-2">/</span>
-          <span className="text-yellow-300">flags</span>
+          <span className="text-white">pattern</span>
+          <span className="text-gray-500 mx-2">/</span>
+          <span className="text-white">flags</span>
         </div>
         <div className="flex items-center space-x-2">
           <input
@@ -59,14 +59,14 @@ export default function RegexInput({ pattern, setPattern, flags, setFlags, error
             value={pattern}
             onChange={(e) => setPattern(e.target.value)}
             placeholder="\\d+|[a-zA-Z]+"
-            className={`flex-1 bg-transparent text-white font-mono text-lg border-b-2 pb-2 focus:outline-none transition-colors ${
-              error ? 'border-red-500 text-red-300' : 'border-gray-600 focus:border-cyan-400'
-            } placeholder-gray-500`}
+            className={`flex-1 bg-black text-white font-mono text-lg border-b pb-2 focus:outline-none transition-colors ${
+              error ? 'border-red-500 text-red-300' : 'border-gray-700 focus:border-green-400'
+            } placeholder-gray-600`}
           />
           {pattern && (
             <button
               onClick={copyToClipboard}
-              className="px-3 py-1 text-xs bg-gray-700 text-cyan-400 rounded hover:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-cyan-400 transition-colors"
+              className="px-3 py-1 text-xs bg-gray-800 text-white border border-gray-700 hover:bg-gray-700 focus:outline-none transition-colors"
               disabled={!regexPreview}
             >
               {copySuccess ? '✓' : 'copy'}
@@ -77,8 +77,8 @@ export default function RegexInput({ pattern, setPattern, flags, setFlags, error
         {/* Regex Preview */}
         {pattern && (
           <div className="mt-2 flex items-center">
-            <span className="text-gray-400 mr-2">→</span>
-            <span className="text-yellow-300 font-mono">
+            <span className="text-gray-500 mr-2">→</span>
+            <span className="text-green-400 font-mono">
               {regexPreview}
             </span>
           </div>
@@ -97,7 +97,7 @@ export default function RegexInput({ pattern, setPattern, flags, setFlags, error
       <div>
         <div className="flex items-center mb-3">
           <span className="text-green-400 mr-2">&gt;</span>
-          <span className="text-cyan-400">flags</span>
+          <span className="text-white">flags</span>
         </div>
         <div className="flex gap-4">
           <label className="flex items-center cursor-pointer">
@@ -107,10 +107,10 @@ export default function RegexInput({ pattern, setPattern, flags, setFlags, error
               onChange={() => handleFlagChange('g')}
               className="sr-only"
             />
-            <span className={`px-3 py-1 text-sm rounded border transition-colors ${
+            <span className={`px-3 py-1 text-sm border transition-colors ${
               flags.g 
-                ? 'bg-cyan-600 text-white border-cyan-500' 
-                : 'bg-gray-700 text-gray-400 border-gray-600 hover:border-gray-500'
+                ? 'bg-green-400 text-black border-green-400' 
+                : 'bg-black text-gray-400 border-gray-700 hover:border-gray-600'
             }`}>
               [g] global
             </span>
@@ -122,10 +122,10 @@ export default function RegexInput({ pattern, setPattern, flags, setFlags, error
               onChange={() => handleFlagChange('i')}
               className="sr-only"
             />
-            <span className={`px-3 py-1 text-sm rounded border transition-colors ${
+            <span className={`px-3 py-1 text-sm border transition-colors ${
               flags.i 
-                ? 'bg-cyan-600 text-white border-cyan-500' 
-                : 'bg-gray-700 text-gray-400 border-gray-600 hover:border-gray-500'
+                ? 'bg-green-400 text-black border-green-400' 
+                : 'bg-black text-gray-400 border-gray-700 hover:border-gray-600'
             }`}>
               [i] ignore case
             </span>
@@ -137,10 +137,10 @@ export default function RegexInput({ pattern, setPattern, flags, setFlags, error
               onChange={() => handleFlagChange('m')}
               className="sr-only"
             />
-            <span className={`px-3 py-1 text-sm rounded border transition-colors ${
+            <span className={`px-3 py-1 text-sm border transition-colors ${
               flags.m 
-                ? 'bg-cyan-600 text-white border-cyan-500' 
-                : 'bg-gray-700 text-gray-400 border-gray-600 hover:border-gray-500'
+                ? 'bg-green-400 text-black border-green-400' 
+                : 'bg-black text-gray-400 border-gray-700 hover:border-gray-600'
             }`}>
               [m] multiline
             </span>
