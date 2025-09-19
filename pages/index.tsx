@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import RegexInput from '../components/RegexInput';
 import ResultsPanel from '../components/ResultsPanel';
+import AIChatPanel from '../components/AIChatPanel';
 
 export default function Home() {
   const [pattern, setPattern] = useState('');
@@ -51,6 +52,12 @@ export default function Home() {
     setSelectedMatchIndex(selectedMatchIndex === index ? null : index);
   };
 
+  // Generate flag string for AI chat
+  const flagString = Object.entries(flags)
+    .filter(([, enabled]) => enabled)
+    .map(([flag]) => flag)
+    .join('');
+
   return (
     <div className="min-h-screen bg-gray-50 py-8 px-4">
       <div className="max-w-4xl mx-auto">
@@ -94,6 +101,16 @@ export default function Home() {
             selectedMatchIndex={selectedMatchIndex}
             onMatchSelect={handleMatchSelect}
           />
+
+          {/* AI Chat Panel Component */}
+          <div className="bg-white rounded-lg shadow-sm border p-6">
+            <h3 className="text-sm font-medium text-gray-700 mb-4">AI Assistant</h3>
+            <AIChatPanel
+              regex={pattern}
+              flags={flagString}
+              testString={testString}
+            />
+          </div>
         </div>
       </div>
     </div>
