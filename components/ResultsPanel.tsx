@@ -46,10 +46,10 @@ export default function ResultsPanel({
         <span 
           key={`match-${i}`}
           data-match-index={i}
-          className={`font-bold rounded px-1 cursor-pointer transition-colors ${
+          className={`font-bold cursor-pointer transition-colors ${
             isSelected 
-              ? 'bg-yellow-400 ring-2 ring-indigo-400' 
-              : 'bg-yellow-300 hover:bg-yellow-400'
+              ? 'text-black bg-yellow-300 px-1 rounded' 
+              : 'text-yellow-300 hover:text-yellow-200'
           }`}
           onClick={() => onMatchSelect(i)}
         >
@@ -76,85 +76,81 @@ export default function ResultsPanel({
   const isLargeInput = testString.length > 200000;
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border p-6">
+    <div className="p-6">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-medium text-gray-700">Matches</h3>
+        <div className="flex items-center">
+          <span className="text-green-400 mr-2">></span>
+          <span className="text-cyan-400">matches</span>
+        </div>
         {!regexError && matches.length > 0 && (
-          <span className="inline-flex items-center px-2 py-0.5 text-xs font-medium rounded-full bg-blue-100 text-blue-800">
-            Matches: {matches.length}
+          <span className="px-2 py-1 text-xs bg-green-600 text-white rounded">
+            {matches.length}
           </span>
         )}
       </div>
       
       {/* Large input warning */}
       {isLargeInput && (
-        <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
-          <p className="text-sm text-yellow-800">
+        <div className="mb-4 p-3 bg-yellow-900 border border-yellow-600 rounded-md">
+          <p className="text-sm text-yellow-300">
             ⚠️ Large input — highlighting may be slow
           </p>
         </div>
       )}
 
       {/* Highlighted Text Preview */}
-      <div className="bg-gray-50 rounded-md p-4 min-h-[120px] font-mono whitespace-pre-wrap">
+      <div className="bg-black border border-gray-600 rounded-md p-4 min-h-[120px] font-mono whitespace-pre-wrap text-sm max-h-[300px] overflow-y-auto">
         {regexError ? (
           <div className="flex items-center justify-center h-full">
-            <p className="text-gray-500 italic">Matches hidden due to invalid regex</p>
+            <p className="text-red-400 italic">✗ Invalid regex pattern</p>
           </div>
         ) : !testString ? (
           <div className="flex items-center justify-center h-full">
-            <p className="text-gray-500 italic">Enter test string to see matches</p>
+            <p className="text-gray-500 italic">$ echo "test string" | grep pattern</p>
           </div>
         ) : highlighted.length > 0 ? (
           highlighted
         ) : (
           <div className="flex items-center justify-center h-full">
-            <p className="text-gray-500 italic">No matches found</p>
+            <p className="text-gray-500 italic">$ no matches found</p>
           </div>
         )}
       </div>
 
-      {/* Match List */}
+      {/* Terminal-style Match List */}
       {!regexError && matches.length > 0 && (
-        <div className="mt-4 pt-4 border-t border-gray-200">
-          <h4 className="text-sm font-medium text-gray-700 mb-3">Match Details</h4>
-          <div className="space-y-2 max-h-60 overflow-y-auto">
+        <div className="mt-4">
+          <div className="text-cyan-400 text-sm mb-2">Matches ({matches.length}):</div>
+          <div className="space-y-1 max-h-60 overflow-y-auto bg-black border border-gray-600 rounded-md p-3">
             {matches.map((match, index) => (
               <button
                 key={index}
                 onClick={() => onMatchSelect(index)}
-                className={`w-full text-left p-3 rounded-md border transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                className={`w-full text-left font-mono text-sm transition-colors focus:outline-none ${
                   selectedMatchIndex === index
-                    ? 'bg-blue-50 border-blue-200'
-                    : 'bg-gray-50 border-gray-200 hover:bg-gray-100'
-                }`}
+                    ? 'text-yellow-300 bg-gray-800'
+                    : 'text-gray-300 hover:text-white hover:bg-gray-800'
+                } p-2 rounded`}
               >
-                <div className="flex items-start gap-3">
-                  <span className="text-xs font-medium text-gray-500 mt-1">
-                    Match #{index + 1}
+                <div className="flex items-start gap-2">
+                  <span className="text-green-400 min-w-0">
+                    {index}:
                   </span>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="font-mono text-sm bg-white border rounded px-2 py-1">
-                        {match.text}
-                      </span>
-                      <span className="text-xs text-gray-600">
-                        at index {match.index}
-                      </span>
-                    </div>
+                    <span className="text-yellow-300">
+                      &quot;{match.text}&quot;
+                    </span>
+                    <span className="text-gray-400 ml-2">
+                      at index {match.index}
+                    </span>
                     {match.groups.length > 0 && (
-                      <div className="mt-2">
-                        <span className="text-xs text-gray-500 block mb-1">Capture Groups:</span>
-                        <div className="flex flex-wrap gap-1">
-                          {match.groups.map((group, groupIndex) => (
-                            <span 
-                              key={groupIndex}
-                              className="inline-flex items-center px-1.5 py-0.5 text-xs font-mono bg-gray-100 text-gray-700 rounded"
-                            >
-                              {groupIndex + 1}: &quot;{group}&quot;
-                            </span>
-                          ))}
-                        </div>
+                      <div className="mt-1 text-xs">
+                        <span className="text-cyan-400">groups: </span>
+                        {match.groups.map((group, groupIndex) => (
+                          <span key={groupIndex} className="text-gray-400 mr-2">
+                            [{groupIndex + 1}] &quot;{group}&quot;
+                          </span>
+                        ))}
                       </div>
                     )}
                   </div>
@@ -167,9 +163,9 @@ export default function ResultsPanel({
 
       {/* Invalid pattern message */}
       {regexError && (
-        <div className="mt-4 pt-4 border-t border-gray-200">
-          <p className="text-sm text-gray-500 italic text-center">
-            Invalid pattern — fix the regex to see matches
+        <div className="mt-4 p-3 bg-red-900 border border-red-600 rounded-md">
+          <p className="text-red-300 text-sm">
+            ✗ {regexError}
           </p>
         </div>
       )}

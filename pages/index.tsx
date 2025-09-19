@@ -58,18 +58,46 @@ export default function Home() {
     .map(([flag]) => flag)
     .join('');
 
-  return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-6xl font-bold text-gray-900 mb-2">ReX</h1>
-          <p className="text-gray-600">Regular Expression Playground</p>
-        </div>
+  // Generate active flags display
+  const activeFlagsDisplay = Object.entries(flags)
+    .filter(([, enabled]) => enabled)
+    .map(([flag]) => `[${flag}]`)
+    .join('');
 
-        {/* Main Content */}
-        <div className="space-y-8">
-          {/* Regex Input Component */}
+  return (
+    <div className="min-h-screen bg-black text-white font-mono">
+      {/* Terminal Header */}
+      <div className="bg-gray-900 shadow-sm border-b border-gray-700 px-6 py-4">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <span className="text-green-400 text-xl font-bold">ReX</span>
+            <span className="text-gray-400">–</span>
+            <span className="text-gray-300">Regex Playground</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            {activeFlagsDisplay && (
+              <div className="flex space-x-1">
+                {Object.entries(flags).map(([flag, enabled]) => (
+                  <span
+                    key={flag}
+                    className={`px-2 py-1 text-xs rounded ${
+                      enabled 
+                        ? 'bg-cyan-600 text-white' 
+                        : 'bg-gray-700 text-gray-400'
+                    }`}
+                  >
+                    [{flag}]
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto p-6 space-y-6">
+        {/* Terminal Input Section */}
+        <div className="bg-gray-900 rounded-md shadow-sm p-6 border border-gray-700">
           <RegexInput
             pattern={pattern}
             setPattern={setPattern}
@@ -77,34 +105,43 @@ export default function Home() {
             setFlags={setFlags}
             error={regexError}
           />
-
+          
           {/* Test String Input */}
-          <div className="bg-white rounded-lg shadow-sm border p-6">
-            <label htmlFor="testString" className="block text-sm font-medium text-gray-700 mb-2">
-              Test String
-            </label>
+          <div className="mt-6">
+            <div className="flex items-center mb-2">
+              <span className="text-green-400 mr-2">></span>
+              <span className="text-cyan-400">testString:</span>
+            </div>
             <textarea
               id="testString"
               value={testString}
               onChange={(e) => setTestString(e.target.value)}
               placeholder="Enter your test string here..."
               rows={6}
-              className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono resize-vertical"
+              className="w-full bg-transparent text-white font-mono border border-gray-600 rounded-md px-4 py-3 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400 resize-vertical placeholder-gray-500"
+            />
+          </div>
+        </div>
+
+        {/* Results and AI Chat Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Results Panel */}
+          <div className="bg-gray-800 rounded-md shadow-sm border border-gray-700">
+            <ResultsPanel
+              matches={matches}
+              regexError={regexError}
+              testString={testString}
+              selectedMatchIndex={selectedMatchIndex}
+              onMatchSelect={handleMatchSelect}
             />
           </div>
 
-          {/* Results Panel Component */}
-          <ResultsPanel
-            matches={matches}
-            regexError={regexError}
-            testString={testString}
-            selectedMatchIndex={selectedMatchIndex}
-            onMatchSelect={handleMatchSelect}
-          />
-
-          {/* AI Chat Panel Component */}
-          <div className="bg-white rounded-lg shadow-sm border p-6">
-            <h3 className="text-sm font-medium text-gray-700 mb-4">AI Assistant</h3>
+          {/* AI Chat Panel */}
+          <div className="bg-gray-900 rounded-md shadow-sm border border-gray-700 p-6">
+            <div className="flex items-center mb-4">
+              <span className="text-green-400 mr-2">></span>
+              <span className="text-cyan-400">AI Assistant</span>
+            </div>
             <AIChatPanel
               regex={pattern}
               flags={flagString}

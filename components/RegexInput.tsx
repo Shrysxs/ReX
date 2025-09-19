@@ -46,80 +46,104 @@ export default function RegexInput({ pattern, setPattern, flags, setFlags, error
   return (
     <div className="space-y-6">
       {/* Regex Pattern Input */}
-      <div className="bg-white rounded-lg shadow-sm border p-6">
-        <label htmlFor="pattern" className="block text-sm font-medium text-gray-700 mb-2">
-          Regular Expression Pattern
-        </label>
-        <input
-          id="pattern"
-          type="text"
-          value={pattern}
-          onChange={(e) => setPattern(e.target.value)}
-          placeholder="Enter your regex pattern..."
-          className={`w-full px-4 py-3 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-mono text-lg ${
-            error ? 'border-red-300 bg-red-50' : 'border-gray-300'
-          }`}
-        />
+      <div>
+        <div className="flex items-center mb-2">
+          <span className="text-green-400 mr-2">></span>
+          <span className="text-cyan-400">pattern</span>
+          <span className="text-gray-400 mx-2">/</span>
+          <span className="text-yellow-300">flags</span>
+        </div>
+        <div className="flex items-center space-x-2">
+          <input
+            id="pattern"
+            type="text"
+            value={pattern}
+            onChange={(e) => setPattern(e.target.value)}
+            placeholder="\\d+|[a-zA-Z]+"
+            className={`flex-1 bg-transparent text-white font-mono text-lg border-b-2 pb-2 focus:outline-none transition-colors ${
+              error ? 'border-red-500 text-red-300' : 'border-gray-600 focus:border-cyan-400'
+            } placeholder-gray-500`}
+          />
+          {pattern && (
+            <button
+              onClick={copyToClipboard}
+              className="px-3 py-1 text-xs bg-gray-700 text-cyan-400 rounded hover:bg-gray-600 focus:outline-none focus:ring-1 focus:ring-cyan-400 transition-colors"
+              disabled={!regexPreview}
+            >
+              {copySuccess ? '✓' : 'copy'}
+            </button>
+          )}
+        </div>
         
         {/* Regex Preview */}
         {pattern && (
-          <div className="mt-3 flex items-center gap-2">
-            <span className="inline-flex items-center px-2 py-1 text-xs font-mono bg-gray-100 text-gray-700 rounded-full">
+          <div className="mt-2 flex items-center">
+            <span className="text-gray-400 mr-2">→</span>
+            <span className="text-yellow-300 font-mono">
               {regexPreview}
             </span>
-            <button
-              onClick={copyToClipboard}
-              className="px-2 py-1 text-xs border border-gray-300 rounded hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              disabled={!regexPreview}
-            >
-              {copySuccess ? '✓ Copied' : 'Copy'}
-            </button>
           </div>
         )}
 
-        {/* Error Banner */}
+        {/* Error Display */}
         {error && (
-          <div className="mt-3">
-            <ErrorBanner message={error} />
+          <div className="mt-2 flex items-center">
+            <span className="text-red-500 mr-2">✗</span>
+            <span className="text-red-400 text-sm">{error}</span>
           </div>
         )}
       </div>
 
       {/* Regex Flags */}
-      <div className="bg-white rounded-lg shadow-sm border p-6">
-        <h3 className="text-sm font-medium text-gray-700 mb-4">Flags</h3>
-        <div className="flex gap-6">
-          <label className="flex items-center">
+      <div>
+        <div className="flex items-center mb-3">
+          <span className="text-green-400 mr-2">></span>
+          <span className="text-cyan-400">flags</span>
+        </div>
+        <div className="flex gap-4">
+          <label className="flex items-center cursor-pointer">
             <input
               type="checkbox"
               checked={flags.g}
               onChange={() => handleFlagChange('g')}
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              className="sr-only"
             />
-            <span className="ml-2 text-sm text-gray-700">
-              <code className="font-mono bg-gray-100 px-1 rounded">g</code> Global
+            <span className={`px-3 py-1 text-sm rounded border transition-colors ${
+              flags.g 
+                ? 'bg-cyan-600 text-white border-cyan-500' 
+                : 'bg-gray-700 text-gray-400 border-gray-600 hover:border-gray-500'
+            }`}>
+              [g] global
             </span>
           </label>
-          <label className="flex items-center">
+          <label className="flex items-center cursor-pointer">
             <input
               type="checkbox"
               checked={flags.i}
               onChange={() => handleFlagChange('i')}
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              className="sr-only"
             />
-            <span className="ml-2 text-sm text-gray-700">
-              <code className="font-mono bg-gray-100 px-1 rounded">i</code> Case Insensitive
+            <span className={`px-3 py-1 text-sm rounded border transition-colors ${
+              flags.i 
+                ? 'bg-cyan-600 text-white border-cyan-500' 
+                : 'bg-gray-700 text-gray-400 border-gray-600 hover:border-gray-500'
+            }`}>
+              [i] ignore case
             </span>
           </label>
-          <label className="flex items-center">
+          <label className="flex items-center cursor-pointer">
             <input
               type="checkbox"
               checked={flags.m}
               onChange={() => handleFlagChange('m')}
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              className="sr-only"
             />
-            <span className="ml-2 text-sm text-gray-700">
-              <code className="font-mono bg-gray-100 px-1 rounded">m</code> Multiline
+            <span className={`px-3 py-1 text-sm rounded border transition-colors ${
+              flags.m 
+                ? 'bg-cyan-600 text-white border-cyan-500' 
+                : 'bg-gray-700 text-gray-400 border-gray-600 hover:border-gray-500'
+            }`}>
+              [m] multiline
             </span>
           </label>
         </div>

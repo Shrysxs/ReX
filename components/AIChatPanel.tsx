@@ -140,78 +140,72 @@ export default function AIChatPanel({ regex, flags, testString }: AIChatPanelPro
   };
 
   const renderMarkdown = (content: string) => {
-    // Simple markdown rendering for code blocks and bold text
+    // Simple markdown rendering for code blocks and bold text with terminal colors
     return content
-      .replace(/`([^`]+)`/g, '<code class="bg-gray-100 px-1 rounded font-mono text-sm">$1</code>')
-      .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+      .replace(/`([^`]+)`/g, '<code class="bg-gray-800 text-yellow-300 px-1 rounded font-mono text-sm">$1</code>')
+      .replace(/\*\*([^*]+)\*\*/g, '<strong class="text-cyan-400">$1</strong>')
       .replace(/\n/g, '<br>');
   };
 
   return (
-    <div className="mt-6">
+    <div>
       {/* Explain Button */}
       <button
         onClick={handleExplainClick}
         disabled={!regex || isLoading}
-        className="inline-flex items-center px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className="inline-flex items-center px-4 py-2 bg-green-600 text-black font-mono text-sm rounded hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
         {isLoading ? (
           <>
-            <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            Explaining...
+            <span className="animate-pulse mr-2">●</span>
+            explaining...
           </>
         ) : (
-          'Explain with AI'
+          '$ explain --ai'
         )}
       </button>
 
       {/* Error Banner */}
       {error && (
-        <div className="mt-3 bg-red-600 text-white px-3 py-2 rounded-md flex items-center gap-2">
-          <span className="text-sm">⚠️</span>
-          <span className="text-sm">{error}</span>
+        <div className="mt-3 bg-red-900 border border-red-600 text-red-300 px-3 py-2 rounded-md flex items-center gap-2">
+          <span className="text-sm">✗</span>
+          <span className="text-sm font-mono">{error}</span>
         </div>
       )}
 
       {/* Chat Panel */}
       {isOpen && (
-        <div className="mt-4 bg-gray-50 rounded-lg shadow-md p-4 transition-all">
+        <div className="mt-4 transition-all">
           {/* Chat Messages */}
-          <div className="max-h-96 overflow-y-auto space-y-3 mb-4">
+          <div className="max-h-[300px] overflow-y-auto space-y-2 mb-4 bg-black border border-gray-600 rounded-md p-3">
             {messages.map((message, index) => (
-              <div
-                key={index}
-                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
-                <div
-                  className={`max-w-xs lg:max-w-md px-3 py-2 rounded-lg text-sm ${
-                    message.role === 'user'
-                      ? 'bg-indigo-100 text-indigo-900'
-                      : 'bg-white border shadow-sm'
-                  }`}
-                >
-                  {message.role === 'assistant' ? (
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: renderMarkdown(message.content)
-                      }}
-                    />
-                  ) : (
-                    <div className="font-mono">{message.content}</div>
-                  )}
+              <div key={index} className="font-mono text-sm">
+                <div className="flex items-start gap-2">
+                  <span className={message.role === 'user' ? 'text-cyan-400' : 'text-green-400'}>
+                    {message.role === 'user' ? 'You:' : 'AI:'}
+                  </span>
+                  <div className="flex-1 text-gray-300">
+                    {message.role === 'assistant' ? (
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: renderMarkdown(message.content)
+                        }}
+                      />
+                    ) : (
+                      <div>{message.content}</div>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
             {isLoading && (
-              <div className="flex justify-start">
-                <div className="bg-white border shadow-sm px-3 py-2 rounded-lg text-sm">
-                  <div className="flex items-center gap-1">
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                    <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+              <div className="font-mono text-sm">
+                <div className="flex items-start gap-2">
+                  <span className="text-green-400">AI:</span>
+                  <div className="flex items-center gap-1 text-gray-400">
+                    <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce"></div>
+                    <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                    <div className="w-1 h-1 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                   </div>
                 </div>
               </div>
@@ -221,23 +215,24 @@ export default function AIChatPanel({ regex, flags, testString }: AIChatPanelPro
 
           {/* Chat Input */}
           {messages.length > 0 && (
-            <div className="flex gap-2">
+            <div className="flex items-center gap-2">
+              <span className="text-green-400 font-mono">></span>
               <textarea
                 ref={textareaRef}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Ask a follow-up question..."
-                className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 font-mono text-sm resize-none"
-                rows={2}
+                placeholder="ask follow-up question..."
+                className="flex-1 bg-transparent text-white font-mono text-sm border-b border-gray-600 focus:outline-none focus:border-cyan-400 resize-none placeholder-gray-500 py-1"
+                rows={1}
                 disabled={isLoading}
               />
               <button
                 onClick={handleSendMessage}
                 disabled={!input.trim() || isLoading}
-                className="px-3 py-1 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
+                className="px-3 py-1 bg-cyan-600 text-black font-mono text-xs rounded hover:bg-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               >
-                Send
+                send
               </button>
             </div>
           )}
