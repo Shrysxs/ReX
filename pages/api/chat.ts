@@ -41,7 +41,7 @@ export default async function handler(
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'llama-3-70b-instruct',
+        model: 'llama-3.3-70b-versatile',
         messages,
         stream: false,
         temperature: 0.3,
