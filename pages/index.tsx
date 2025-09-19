@@ -31,7 +31,7 @@ export default function Home() {
 
     try {
       const flagString = Object.entries(flags)
-        .filter(([_, enabled]) => enabled)
+        .filter(([, enabled]) => enabled)
         .map(([flag]) => flag)
         .join('');
       
@@ -49,7 +49,7 @@ export default function Home() {
       }
 
       // Create highlighted version
-      let highlighted: JSX.Element[] = [];
+      const highlighted: JSX.Element[] = [];
       let lastIndex = 0;
 
       matches.forEach((match, i) => {
